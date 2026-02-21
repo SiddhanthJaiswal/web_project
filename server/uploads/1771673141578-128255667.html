@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Practice Grid</title>
+        <style>
+            body{
+                background-color: rgba(221, 0, 255, 0.353);
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            #bodybox{
+                background-color: white;
+                width: 800px;
+                height: 500px;
+                display: flex;
+                justify-self: center;
+                transform: translate(0,40%);
+                border-radius: 5%;
+
+            }
+            form{
+                transform: translate(0px,150px);
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="bodybox">
+            <h2 style="transform: translate(350px,0); font-size:50px;">Login</h2>
+            <form>
+                <div class="formbox">
+                    <b>Username</b>
+                    <br>
+                    <input style="border-radius: 5px; font-size: 25px; width: 600px;" id="userbox" type="text" name="user_name" placeholder="Enter your name">
+                </div>
+                <div class="formbox">
+                    <br>
+                    <b>Password</b>
+                    <br>
+                    <input style="border-radius: 5px; font-size: 25px; width: 600px;" type="password" name="pwd" placeholder="Enter your password">
+                </div>
+                
+            </form>
+        </div>
+    </body>
+</html>

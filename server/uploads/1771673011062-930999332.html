@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>grid2</title>
+        <style>
+            body{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: blanchedalmond;
+            }
+            .grid{
+                display: grid;
+                grid-template-columns: repeat(4,80px);
+                grid-template-rows: repeat(4,80px);
+                background-color: black;
+                border: solid red;
+                gap:6px;
+                padding: px;
+            }
+            div{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size:28px;
+                border: red;
+            }
+            .one{grid-row: 1;grid-column: 1/4;}
+            .two{grid-row: 1;grid-column: 4;}
+            .three{grid-row: 2;grid-column: 1;}
+            .four{grid-row: 2;grid-column: 2;}
+            .five{grid-row: 2;grid-column: 3;}
+            .six{grid-row: 2;grid-column: 4;}
+            .seven{grid-row: 3;grid-column: 1;}
+            .eight{grid-row: 3;grid-column: 2;}
+            .nine{grid-row: 3;grid-column: 3;}
+        </style>
+    </head>
+    <body>
+        <div class="grid">
+            <div class="one">1</div>
+            <div class="two">2</div>
+            <div class="three">3</div>
+            <div class="four">4</div>
+            <div class="five">5</div>
+            <div class="six">6</div>
+            <div class="seven">7</div>
+            <div class="eight">8</div>
+            <div class="nine">9</div>
+        </div>
+    </body>
+</html>
