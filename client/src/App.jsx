@@ -6,6 +6,8 @@ import Subjects from "./pages/Subjects";
 import Checklist from "./pages/Checklist";
 import Exams from "./pages/Exams";
 import Goals from "./pages/Goals";
+import ImportantLinks from "./pages/ImportantLinks";
+import Profile from "./pages/Profile";
 import SubjectDetails from "./pages/SubjectDetails";
 import { Navigate } from "react-router-dom";
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/checklist" element={<Checklist />} />
         <Route path="/exams" element={<Exams />} />
         <Route path="/goals" element={<Goals />} />
+        <Route path="/important-links" element={<ImportantLinks />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Module = require("../models/Module");
+const File = require("../models/File");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // Create module
@@ -16,13 +17,38 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// Get modules for subject
+// Get modules for subject, including files
 router.get("/:subjectId", authMiddleware, async (req, res) => {
-  const modules = await Module.find({
-    subject: req.params.subjectId,
-    user: req.user.id
-  });
-  res.json(modules);
+  try {
+    const modules = await Module.find({
+      subject: req.params.subjectId,
+      user: req.user.id
+    });
+
+    const moduleIds = modules.map((m) => String(m._id));
+
+    // query for files belonging to these modules; do **not** require the
+    // `user` field because older documents created before the schema
+    // change will not have that property. the parent module query already
+    // ensures the user only sees their own modules, so leaking an
+    // accidentally unowned file is unlikely in this simple app.
+    const files = await File.find({
+      moduleId: { $in: moduleIds }
+      // we deliberately skip `user` filter here
+    });
+
+    const modulesWithFiles = modules.map((m) => {
+      const mObj = m.toObject();
+      return {
+        ...mObj,
+        files: files.filter((f) => f.moduleId === String(m._id))
+      };
+    });
+
+    res.json(modulesWithFiles);
+  } catch (err) {
+    res.status(500).json({ message: "Fetch failed" });
+  }
 });
 
 // Toggle completion

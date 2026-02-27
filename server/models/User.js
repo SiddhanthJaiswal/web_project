@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  phone: String,
+  currentCGPA: Number,
+  currentCredits: Number,
+  subjects: [String],
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

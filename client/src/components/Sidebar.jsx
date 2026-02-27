@@ -4,62 +4,52 @@ function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // 🔥 remove JWT
-    navigate("/"); // go back to login
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
-    <div style={styles.sidebar}>
-      <h2 style={styles.logo}>StudentOS</h2>
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <h2 className="sidebar-logo">StudentOS</h2>
+        <span className="sidebar-tagline">Your semester command center</span>
+      </div>
 
-      <nav style={styles.nav}>
-        <Link style={styles.link} to="/dashboard">Dashboard</Link>
-        <Link style={styles.link} to="/subjects">Subjects</Link>
-        <Link style={styles.link} to="/checklist">Checklist</Link>
-        <Link style={styles.link} to="/exams">Exams</Link>
-        <Link style={styles.link} to="/goals">Goals</Link>
+      <nav className="sidebar-nav">
+        <Link className="sidebar-link" to="/dashboard">
+          <span className="sidebar-link-icon" />
+          <span>Dashboard</span>
+        </Link>
+        <Link className="sidebar-link" to="/subjects">
+          <span className="sidebar-link-icon" />
+          <span>Subjects</span>
+        </Link>
+        <Link className="sidebar-link" to="/exams">
+          <span className="sidebar-link-icon" />
+          <span>Exams</span>
+        </Link>
+        <Link className="sidebar-link" to="/goals">
+          <span className="sidebar-link-icon" />
+          <span>Goals</span>
+        </Link>
+        <Link className="sidebar-link" to="/important-links">
+          <span className="sidebar-link-icon" />
+          <span>Important Links</span>
+        </Link>
       </nav>
 
-      {/* Logout Button */}
-      <button style={styles.logoutBtn} onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
+      <div className="sidebar-footer">
+        <Link className="sidebar-link" to="/profile">
+          <span className="sidebar-link-icon" />
+          <span>Profile</span>
+        </Link>
+        <button className="btn btn-ghost" onClick={handleLogout}>
+          Logout
+        </button>
+        <span className="sidebar-muted">Logged in as student</span>
+      </div>
+    </aside>
   );
 }
-
-const styles = {
-  sidebar: {
-    width: "230px",
-    background: "#111827",
-    color: "white",
-    padding: "30px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    height: "100vh"
-  },
-  logo: {
-    fontSize: "20px"
-  },
-  nav: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "18px"
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "15px"
-  },
-  logoutBtn: {
-    background: "#ef4444",
-    border: "none",
-    padding: "10px",
-    borderRadius: "6px",
-    color: "white",
-    cursor: "pointer"
-  }
-};
 
 export default Sidebar;

@@ -6,7 +6,8 @@ require("dotenv").config();
 /* ===============================
    IMPORT ROUTES
 =============================== */
-
+const checklistRoutes = require("./routes/checklistRoutes");
+const examRoutes = require("./routes/examRoutes");
 const authRoutes = require("./routes/authRoutes");
 const subjectRoutes = require("./routes/subjectRoutes");
 const moduleRoutes = require("./routes/moduleRoutes");
@@ -46,7 +47,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/files", fileRoutes);
-
+app.use("/api/checklist", checklistRoutes);
+app.use("/api/exams", examRoutes);
 /* ===============================
    PROTECTED TEST ROUTE
 =============================== */

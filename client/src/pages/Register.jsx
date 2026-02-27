@@ -6,7 +6,11 @@ function Register() {
     name: "",
     email: "",
     password: "",
-    semester: ""
+    semester: "",
+    phone: "",
+    currentCGPA: "",
+    currentCredits: "",
+    subjects: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -17,14 +21,21 @@ function Register() {
 
   const handleRegister = async () => {
     if (!form.name || !form.email || !form.password || !form.semester) {
-      alert("Please fill all fields");
+      alert("Please fill required fields");
       return;
     }
 
     try {
       setLoading(true);
 
-      const data = await registerUser(form);
+      const dataToSend = {
+        ...form,
+        currentCGPA: form.currentCGPA ? parseFloat(form.currentCGPA) : undefined,
+        currentCredits: form.currentCredits ? parseInt(form.currentCredits) : undefined,
+        subjects: form.subjects ? form.subjects.split(",").map(s => s.trim()).filter(s => s) : []
+      };
+
+      const data = await registerUser(dataToSend);
 
       if (data.message === "User already exists") {
         alert("User already exists");
@@ -79,6 +90,44 @@ function Register() {
           type="number"
           placeholder="Current Semester"
           value={form.semester}
+          onChange={handleChange}
+          style={styles.input}
+        />
+
+        <input
+          name="phone"
+          type="tel"
+          placeholder="Phone (optional)"
+          value={form.phone}
+          onChange={handleChange}
+          style={styles.input}
+        />
+
+        <input
+          name="currentCGPA"
+          type="number"
+          step="0.01"
+          min="0"
+          max="4"
+          placeholder="Current CGPA (optional)"
+          value={form.currentCGPA}
+          onChange={handleChange}
+          style={styles.input}
+        />
+
+        <input
+          name="currentCredits"
+          type="number"
+          placeholder="Current Credits (optional)"
+          value={form.currentCredits}
+          onChange={handleChange}
+          style={styles.input}
+        />
+
+        <input
+          name="subjects"
+          placeholder="Subjects (comma-separated, optional)"
+          value={form.subjects}
           onChange={handleChange}
           style={styles.input}
         />

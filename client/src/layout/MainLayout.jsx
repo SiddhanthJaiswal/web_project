@@ -2,11 +2,11 @@ import Sidebar from "../components/Sidebar";
 
 function MainLayout({ children }) {
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
+    <div className="app-shell">
       <Sidebar />
-      <div style={{ flex: 1, padding: 30, background: "#f3f4f6" }}>
-        {children}
-      </div>
+      <main className="app-main">
+        <div className="app-main-inner">{children}</div>
+      </main>
     </div>
   );
 }

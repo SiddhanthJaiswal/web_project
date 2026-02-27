@@ -34,34 +34,34 @@ function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Welcome Back</h2>
-        <p style={styles.subtitle}>Login to your Student Dashboard</p>
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <h2 className="auth-title">Welcome back</h2>
+        <p className="auth-subtitle">Log in to your StudentOS dashboard.</p>
 
         <input
+          className="input"
           type="email"
           placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={styles.input}
         />
 
         <input
+          className="input"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
         />
 
-        <button style={styles.button} onClick={handleLogin}>
+        <button className="btn btn-primary" onClick={handleLogin}>
           {loading ? "Logging in..." : "Login"}
         </button>
-        <p style={{ fontSize: 14 }}>
+        <p className="auth-footer-text">
           Don't have an account?{" "}
           <span
-            style={{ color: "#4f46e5", cursor: "pointer" }}
+            className="auth-link"
             onClick={() => (window.location.href = "/register")}
           >
             Register
@@ -71,52 +71,5 @@ function Login() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "linear-gradient(135deg, #4f46e5, #6366f1)"
-  },
-  card: {
-    width: "350px",
-    padding: "40px",
-    background: "white",
-    borderRadius: "12px",
-    boxShadow: "0 15px 40px rgba(0,0,0,0.2)",
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px"
-  },
-  title: {
-    margin: 0,
-    fontSize: "22px",
-    fontWeight: "600"
-  },
-  subtitle: {
-    margin: 0,
-    fontSize: "14px",
-    color: "#6b7280",
-    marginBottom: "10px"
-  },
-  input: {
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px solid #e5e7eb",
-    fontSize: "14px"
-  },
-  button: {
-    padding: "12px",
-    borderRadius: "8px",
-    border: "none",
-    background: "#4f46e5",
-    color: "white",
-    fontSize: "15px",
-    fontWeight: "500",
-    cursor: "pointer"
-  }
-};
 
 export default Login;
