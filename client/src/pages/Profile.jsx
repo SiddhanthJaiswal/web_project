@@ -49,6 +49,8 @@ function Profile() {
         ...form,
         currentCGPA: form.currentCGPA ? parseFloat(form.currentCGPA) : undefined,
         currentCredits: form.currentCredits ? parseInt(form.currentCredits) : undefined,
+        targetCGPA: form.targetCGPA ? parseFloat(form.targetCGPA) : undefined,
+        targetCredits: form.targetCredits ? parseInt(form.targetCredits) : undefined,
         subjects: form.subjects
           ? form.subjects.split(",").map(s => s.trim()).filter(s => s)
           : []

@@ -5,6 +5,8 @@ function Dashboard() {
   const token = localStorage.getItem("token");
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
+  const [profile, setProfile] = useState(null);
+  const [examCount, setExamCount] = useState(0);
 
   const fetchTasks = async () => {
     if (!token) return;
@@ -23,8 +25,38 @@ function Dashboard() {
     }
   };
 
+  const fetchProfile = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      setProfile(data);
+    } catch (err) {
+      console.error("Dashboard profile fetch error", err);
+    }
+  };
+
+  const fetchExams = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/exam", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      setExamCount(Array.isArray(data) ? data.length : 0);
+    } catch (err) {
+      console.error("Dashboard exam fetch error", err);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
+    fetchProfile();
+    fetchExams();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -89,13 +121,17 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Total Subjects</h3>
             <p className="card-meta">Currently tracked</p>
-            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>5</p>
+            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
+              {profile?.subjects?.length || 0}
+            </p>
           </div>
 
           <div className="card">
             <h3 className="card-title">Upcoming Exams</h3>
             <p className="card-meta">Next 30 days</p>
-            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>2</p>
+            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
+              {examCount}
+            </p>
           </div>
 
           <div className="card">
@@ -109,7 +145,9 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Current CGPA</h3>
             <p className="card-meta">Self reported</p>
-            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>8.2</p>
+            <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
+              {profile?.currentCGPA ?? "--"}
+            </p>
           </div>
         </div>
       </section>
