@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import MainLayout from "../layout/MainLayout";
 import axios from "axios";
 
 const Goals = () => {
@@ -13,7 +14,6 @@ const Goals = () => {
     },
   });
 
-  // 🔥 Fetch Goals
   const fetchGoals = async () => {
     try {
       const res = await api.get("/goals");
@@ -27,7 +27,6 @@ const Goals = () => {
     fetchGoals();
   }, []);
 
-  // 🔥 Add Goal
   const addGoal = async (e) => {
     e.preventDefault();
     if (!newGoal.trim()) return;
@@ -41,7 +40,6 @@ const Goals = () => {
     }
   };
 
-  // 🔥 Toggle Complete
   const toggleGoal = async (id, completed) => {
     try {
       await api.put(`/goals/${id}`, { completed: !completed });
@@ -51,7 +49,6 @@ const Goals = () => {
     }
   };
 
-  // 🔥 Delete Goal
   const deleteGoal = async (id) => {
     try {
       await api.delete(`/goals/${id}`);
@@ -62,83 +59,87 @@ const Goals = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2>🎯 My Goals</h2>
-
-      <form onSubmit={addGoal} style={styles.form}>
-        <input
-          type="text"
-          placeholder="Enter new goal..."
-          value={newGoal}
-          onChange={(e) => setNewGoal(e.target.value)}
-          style={styles.input}
-        />
-        <button type="submit" style={styles.addBtn}>
-          Add
-        </button>
-      </form>
-
-      <ul style={styles.list}>
-        {goals.map((goal) => (
-          <li key={goal._id} style={styles.item}>
-            <span
-              onClick={() => toggleGoal(goal._id, goal.completed)}
-              style={{
-                textDecoration: goal.completed ? "line-through" : "none",
-                cursor: "pointer",
-              }}
-            >
-              {goal.title}
+    <MainLayout>
+      <section className="page-section">
+        <div className="page-section-header">
+          <div>
+            <h1 className="page-title">Goals</h1>
+            <p className="page-subtitle">
+              Track your personal and academic goals.
+            </p>
+          </div>
+          <div className="stat-pill">
+            <span className="stat-pill-dot" />
+            <span>
+              {goals.length} goal{goals.length === 1 ? "" : "s"}
             </span>
+          </div>
+        </div>
 
-            <button
-              onClick={() => deleteGoal(goal._id)}
-              style={styles.deleteBtn}
-            >
-              ❌
+        <div className="card">
+          <h2 className="card-title">Add goal</h2>
+          <p className="card-meta">Set something you want to achieve.</p>
+
+          <form onSubmit={addGoal} className="mt-md field-row">
+            <input
+              className="input"
+              type="text"
+              placeholder="Enter new goal..."
+              value={newGoal}
+              onChange={(e) => setNewGoal(e.target.value)}
+            />
+            <button className="btn btn-primary" type="submit">
+              Add
             </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+          </form>
+        </div>
+      </section>
 
-const styles = {
-  container: {
-    padding: "40px",
-    maxWidth: "600px",
-    margin: "auto",
-  },
-  form: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "20px",
-  },
-  input: {
-    flex: 1,
-    padding: "10px",
-  },
-  addBtn: {
-    padding: "10px 15px",
-    cursor: "pointer",
-  },
-  list: {
-    listStyle: "none",
-    padding: 0,
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "10px",
-    borderBottom: "1px solid #ddd",
-  },
-  deleteBtn: {
-    background: "transparent",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "16px",
-  },
+      <section className="page-section mt-md">
+        <h2 className="page-title" style={{ fontSize: 18 }}>
+          Your goals
+        </h2>
+        <p className="page-subtitle">
+          Click a goal to mark it complete.
+        </p>
+
+        <div className="checklist-list mt-sm">
+          {goals.length === 0 && (
+            <p className="page-subtitle">
+              No goals yet. Add your first one above.
+            </p>
+          )}
+
+          {goals.map((goal) => (
+            <div key={goal._id} className="task-card">
+              <div
+                className="task-card-main"
+                onClick={() => toggleGoal(goal._id, goal.completed)}
+                style={{ cursor: "pointer" }}
+              >
+                <span
+                  className="task-text"
+                  style={{
+                    textDecoration: goal.completed ? "line-through" : "none",
+                    fontWeight: 500,
+                  }}
+                >
+                  {goal.title}
+                </span>
+              </div>
+
+              <button
+                className="btn btn-danger task-delete-btn"
+                onClick={() => deleteGoal(goal._id)}
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+    </MainLayout>
+  );
 };
 
 export default Goals;
