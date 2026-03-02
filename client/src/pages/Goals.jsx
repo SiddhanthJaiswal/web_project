@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-//hi bro
+//hi bro 
+//hi siddhanth
 const Goals = () => {
   const [goals, setGoals] = useState([]);
   const [newGoal, setNewGoal] = useState("");
