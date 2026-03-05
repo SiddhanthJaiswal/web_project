@@ -1,3 +1,4 @@
+javascript
 import { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout";
 
@@ -7,11 +8,15 @@ function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [profile, setProfile] = useState(null);
+
   const [examCount, setExamCount] = useState(0);
-  const [subjectCount, setSubjectCount] = useState(0); // NEW
+  const [subjectCount, setSubjectCount] = useState(0);
+
+  /* ================= TASKS ================= */
 
   const fetchTasks = async () => {
     if (!token) return;
+
     try {
       const res = await fetch("http://localhost:5000/api/checklist", {
         headers: {
@@ -20,6 +25,7 @@ function Dashboard() {
       });
 
       if (!res.ok) return;
+
       const data = await res.json();
       setTasks(data);
     } catch {
@@ -27,14 +33,20 @@ function Dashboard() {
     }
   };
 
+  /* ================= PROFILE ================= */
+
   const fetchProfile = async () => {
     if (!token) return;
+
     try {
       const res = await fetch("http://localhost:5000/api/auth/profile", {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       if (!res.ok) return;
+
       const data = await res.json();
       setProfile(data);
     } catch (err) {
@@ -42,22 +54,7 @@ function Dashboard() {
     }
   };
 
-  const fetchExams = async () => {
-    if (!token) return;
-    try {
-      const res = await fetch("http://localhost:5000/api/exam", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!res.ok) return;
-      const data = await res.json();
-      setExamCount(Array.isArray(data) ? data.length : 0);
-    } catch (err) {
-      console.error("Dashboard exam fetch error", err);
-    }
-  };
-
-  /* NEW SUBJECT FETCH */
+  /* ================= SUBJECT COUNT ================= */
 
   const fetchSubjects = async () => {
     if (!token) return;
@@ -73,18 +70,42 @@ function Dashboard() {
 
       const data = await res.json();
       setSubjectCount(Array.isArray(data) ? data.length : 0);
-
     } catch (err) {
       console.error("Dashboard subject fetch error", err);
     }
   };
 
+  /* ================= EXAM COUNT ================= */
+
+  const fetchExams = async () => {
+    if (!token) return;
+
+    try {
+      const res = await fetch("http://localhost:5000/api/exam", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      setExamCount(Array.isArray(data) ? data.length : 0);
+    } catch (err) {
+      console.error("Dashboard exam fetch error", err);
+    }
+  };
+
+  /* ================= LOAD DASHBOARD ================= */
+
   useEffect(() => {
     fetchTasks();
     fetchProfile();
+    fetchSubjects();
     fetchExams();
-    fetchSubjects(); // NEW
   }, [token]);
+
+  /* ================= TASK ACTIONS ================= */
 
   const addTask = async () => {
     if (!text || !token) return;
@@ -147,7 +168,6 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Total Subjects</h3>
             <p className="card-meta">Currently tracked</p>
-
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {subjectCount}
             </p>
@@ -156,7 +176,6 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Upcoming Exams</h3>
             <p className="card-meta">Next 30 days</p>
-
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {examCount}
             </p>
@@ -164,8 +183,7 @@ function Dashboard() {
 
           <div className="card">
             <h3 className="card-title">Pending Tasks</h3>
-            <p className="card-meta">From today&apos;s checklist</p>
-
+            <p className="card-meta">From today’s checklist</p>
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {pendingCount < 0 ? 0 : pendingCount}
             </p>
@@ -174,7 +192,6 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Current CGPA</h3>
             <p className="card-meta">Self reported</p>
-
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {profile?.currentCGPA ?? "--"}
             </p>
@@ -203,7 +220,7 @@ function Dashboard() {
           <div className="page-section-header">
             <div>
               <h2 className="page-title" style={{ fontSize: 20 }}>
-                Today&apos;s Checklist
+                Today's Checklist
               </h2>
 
               <p className="page-subtitle">
@@ -264,7 +281,6 @@ function Dashboard() {
               <button
                 className="btn btn-danger task-delete-btn"
                 onClick={() => deleteTask(task._id)}
-                aria-label="Delete task"
               >
                 ✕
               </button>
