@@ -283,16 +283,17 @@ const styles = {
     alignItems: "center"
   },
 
-  modal: {
-    background: "#ffffff",
-    padding: "40px",
-    borderRadius: "16px",
-    width: "440px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "18px",
-    boxShadow: "0 20px 60px rgba(0,0,0,0.25)"
-  },
+modal: {
+  background: "#1e293b",
+  color: "white",
+  padding: "40px",
+  borderRadius: "16px",
+  width: "440px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "18px",
+  boxShadow: "0 20px 60px rgba(0,0,0,0.35)"
+},
 
   modalTitle: {
     fontSize: "22px",
@@ -306,7 +307,8 @@ const styles = {
     border: "1px solid #d1d5db",
     fontSize: "14px",
     outline: "none",
-    background: "#f9fafb"
+    background: "#334155",
+    color: "white"
   },
 
   textarea: {
