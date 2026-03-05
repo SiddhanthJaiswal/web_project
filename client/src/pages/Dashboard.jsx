@@ -1,4 +1,3 @@
-javascript
 import { useEffect, useState } from "react";
 import MainLayout from "../layout/MainLayout";
 
