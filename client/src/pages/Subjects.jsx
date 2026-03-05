@@ -65,7 +65,6 @@ function Subjects() {
       setShowModal(false);
       setNewSubject({ name: "", credits: "", description: "" });
       fetchSubjects();
-
     } catch (err) {
       alert("Server error");
     }
@@ -94,7 +93,8 @@ function Subjects() {
     <MainLayout>
       <div style={styles.container}>
         <div style={styles.header}>
-          <h1>Subjects</h1>
+          <h1 style={styles.title}>Subjects</h1>
+
           <button
             style={styles.addButton}
             onClick={() => setShowModal(true)}
@@ -105,17 +105,20 @@ function Subjects() {
 
         <div style={styles.grid}>
           {subjects.map((subject) => (
-            <div
-              key={subject._id}
-              style={styles.card}
-            >
+            <div key={subject._id} style={styles.card}>
               <div
                 onClick={() => navigate(`/subjects/${subject._id}`)}
                 style={{ cursor: "pointer" }}
               >
-                <h3>{subject.name}</h3>
-                <p>{subject.description}</p>
-                <p><strong>Credits:</strong> {subject.credits}</p>
+                <h3 style={styles.subjectTitle}>{subject.name}</h3>
+
+                <p style={styles.description}>
+                  {subject.description || "No description"}
+                </p>
+
+                <p style={styles.credits}>
+                  <strong>Credits:</strong> {subject.credits || 0}
+                </p>
               </div>
 
               <button
@@ -171,7 +174,10 @@ function Subjects() {
               />
 
               <div style={styles.modalButtons}>
-                <button onClick={() => setShowModal(false)}>
+                <button
+                  style={styles.cancelBtn}
+                  onClick={() => setShowModal(false)}
+                >
                   Cancel
                 </button>
 
@@ -195,7 +201,14 @@ function Subjects() {
 ============================ */
 
 const styles = {
-  container: { display: "flex", flexDirection: "column", gap: "25px" },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "30px",
+    padding: "10px",
+    fontFamily: "Inter, system-ui, sans-serif",
+    color: "#374151"
+  },
 
   header: {
     display: "flex",
@@ -203,39 +216,69 @@ const styles = {
     alignItems: "center"
   },
 
+  title: {
+    fontSize: "26px",
+    fontWeight: "600",
+    color: "#1f2937"
+  },
+
   addButton: {
-    padding: "10px 15px",
+    padding: "10px 18px",
     background: "#4f46e5",
     color: "white",
     border: "none",
     borderRadius: "8px",
-    cursor: "pointer"
+    cursor: "pointer",
+    fontWeight: "600",
+    fontSize: "14px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
   },
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-    gap: "20px"
+    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+    gap: "22px"
   },
 
   card: {
-    background: "white",
-    padding: "20px",
-    borderRadius: "12px",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.05)",
+    background: "#ffffff",
+    padding: "22px",
+    borderRadius: "14px",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.06)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    border: "1px solid #f1f5f9"
+  },
+
+  subjectTitle: {
+    fontSize: "18px",
+    fontWeight: "600",
+    marginBottom: "6px",
+    color: "#111827"
+  },
+
+  description: {
+    fontSize: "14px",
+    color: "#6b7280",
+    marginBottom: "8px",
+    lineHeight: "1.4"
+  },
+
+  credits: {
+    fontSize: "13px",
+    color: "#4b5563"
   },
 
   deleteBtn: {
     background: "#ef4444",
     border: "none",
     color: "white",
-    padding: "6px",
+    padding: "7px",
     borderRadius: "6px",
-    marginTop: "10px",
-    cursor: "pointer"
+    marginTop: "12px",
+    cursor: "pointer",
+    fontSize: "13px"
   },
 
   modalOverlay: {
@@ -244,31 +287,43 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100%",
-    background: "rgba(0,0,0,0.5)",
+    background: "rgba(0,0,0,0.35)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
 
   modal: {
-    background: "white",
+    background: "#ffffff",
     padding: "30px",
-    borderRadius: "12px",
-    width: "400px",
+    borderRadius: "14px",
+    width: "420px",
     display: "flex",
     flexDirection: "column",
-    gap: "15px"
+    gap: "15px",
+    boxShadow: "0 10px 40px rgba(0,0,0,0.15)"
   },
 
   input: {
-    padding: "10px",
+    padding: "11px",
     borderRadius: "8px",
-    border: "1px solid #ddd"
+    border: "1px solid #e5e7eb",
+    fontSize: "14px",
+    outline: "none"
   },
 
   modalButtons: {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginTop: "10px"
+  },
+
+  cancelBtn: {
+    padding: "10px 15px",
+    borderRadius: "8px",
+    border: "1px solid #ddd",
+    background: "#f3f4f6",
+    cursor: "pointer"
   }
 };
 
