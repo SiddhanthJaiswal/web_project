@@ -3,10 +3,12 @@ import MainLayout from "../layout/MainLayout";
 
 function Dashboard() {
   const token = localStorage.getItem("token");
+
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
   const [profile, setProfile] = useState(null);
   const [examCount, setExamCount] = useState(0);
+  const [subjectCount, setSubjectCount] = useState(0); // NEW
 
   const fetchTasks = async () => {
     if (!token) return;
@@ -21,7 +23,7 @@ function Dashboard() {
       const data = await res.json();
       setTasks(data);
     } catch {
-      // ignore dashboard checklist errors for now
+      // ignore dashboard checklist errors
     }
   };
 
@@ -31,6 +33,7 @@ function Dashboard() {
       const res = await fetch("http://localhost:5000/api/auth/profile", {
         headers: { Authorization: `Bearer ${token}` }
       });
+
       if (!res.ok) return;
       const data = await res.json();
       setProfile(data);
@@ -45,6 +48,7 @@ function Dashboard() {
       const res = await fetch("http://localhost:5000/api/exam", {
         headers: { Authorization: `Bearer ${token}` }
       });
+
       if (!res.ok) return;
       const data = await res.json();
       setExamCount(Array.isArray(data) ? data.length : 0);
@@ -53,12 +57,34 @@ function Dashboard() {
     }
   };
 
+  /* NEW SUBJECT FETCH */
+
+  const fetchSubjects = async () => {
+    if (!token) return;
+
+    try {
+      const res = await fetch("http://localhost:5000/api/subjects", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      setSubjectCount(Array.isArray(data) ? data.length : 0);
+
+    } catch (err) {
+      console.error("Dashboard subject fetch error", err);
+    }
+  };
+
   useEffect(() => {
     fetchTasks();
     fetchProfile();
     fetchExams();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchSubjects(); // NEW
+  }, [token]);
 
   const addTask = async () => {
     if (!text || !token) return;
@@ -121,14 +147,16 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Total Subjects</h3>
             <p className="card-meta">Currently tracked</p>
+
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
-              {profile?.subjects?.length || 0}
+              {subjectCount}
             </p>
           </div>
 
           <div className="card">
             <h3 className="card-title">Upcoming Exams</h3>
             <p className="card-meta">Next 30 days</p>
+
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {examCount}
             </p>
@@ -137,6 +165,7 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Pending Tasks</h3>
             <p className="card-meta">From today&apos;s checklist</p>
+
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {pendingCount < 0 ? 0 : pendingCount}
             </p>
@@ -145,6 +174,7 @@ function Dashboard() {
           <div className="card">
             <h3 className="card-title">Current CGPA</h3>
             <p className="card-meta">Self reported</p>
+
             <p style={{ fontSize: 28, fontWeight: 700, marginTop: 10 }}>
               {profile?.currentCGPA ?? "--"}
             </p>
@@ -156,10 +186,12 @@ function Dashboard() {
         <h2 className="page-title" style={{ fontSize: 18 }}>
           CGPA Target
         </h2>
+
         <div className="mt-sm">
           <div className="progress-bar">
             <div className="progress-bar-fill" style={{ width: "80%" }} />
           </div>
+
           <p className="page-subtitle" style={{ marginTop: 6 }}>
             Target: 8.5 this semester
           </p>
@@ -173,10 +205,12 @@ function Dashboard() {
               <h2 className="page-title" style={{ fontSize: 20 }}>
                 Today&apos;s Checklist
               </h2>
+
               <p className="page-subtitle">
                 Capture everything you need to get done today.
               </p>
             </div>
+
             <div className="stat-pill">
               <span className="stat-pill-dot" />
               <span>
@@ -192,6 +226,7 @@ function Dashboard() {
               onChange={(e) => setText(e.target.value)}
               placeholder="Add a task (e.g. revise DBMS, finish assignment)…"
             />
+
             <button className="btn btn-primary" onClick={addTask}>
               Add task
             </button>
@@ -216,6 +251,7 @@ function Dashboard() {
                   checked={task.completed}
                   onChange={() => toggleTask(task._id)}
                 />
+
                 <span
                   className={
                     "task-text" + (task.completed ? " completed" : "")
