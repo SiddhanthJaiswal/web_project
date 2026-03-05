@@ -23,22 +23,25 @@ const Goals = () => {
     }
   };
 
-  useEffect(() => {
-    fetchGoals();
-  }, []);
+useEffect(() => {
+  fetchGoals();
+}, []);
 
-  const addGoal = async (e) => {
-    e.preventDefault();
-    if (!newGoal.trim()) return;
+const addGoal = async (e) => {
+  e.preventDefault();
+  if (!newGoal.trim()) return;
 
-    try {
-      await api.post("/goals", { title: newGoal });
-      setNewGoal("");
-      fetchGoals();
-    } catch (error) {
-      console.error("Error adding goal", error);
-    }
-  };
+  try {
+    const res = await api.post("/goals", { title: newGoal });
+
+    // add new goal directly to state
+    setGoals([...goals, res.data]);
+
+    setNewGoal("");
+  } catch (error) {
+    console.error("Error adding goal", error);
+  }
+};
 
   const toggleGoal = async (id, completed) => {
     try {
