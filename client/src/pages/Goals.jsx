@@ -29,17 +29,25 @@ useEffect(() => {
 
 const addGoal = async (e) => {
   e.preventDefault();
-  if (!newGoal.trim()) return;
+
+  if (!newGoal.trim()) {
+    alert("Please enter a goal");
+    return;
+  }
 
   try {
     const res = await api.post("/goals", { title: newGoal });
 
-    // add new goal directly to state
-    setGoals([...goals, res.data]);
+    console.log("Goal created:", res.data); // debug log
+
+    // update goals list immediately
+    setGoals((prev) => [...prev, res.data]);
 
     setNewGoal("");
+
   } catch (error) {
-    console.error("Error adding goal", error);
+    console.error("Add goal failed:", error.response?.data || error.message);
+    alert("Failed to add goal");
   }
 };
 
