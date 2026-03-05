@@ -14,10 +14,6 @@ function Subjects() {
     description: ""
   });
 
-  /* ============================
-     FETCH SUBJECTS FROM BACKEND
-  ============================ */
-
   const fetchSubjects = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/subjects", {
@@ -36,10 +32,6 @@ function Subjects() {
   useEffect(() => {
     fetchSubjects();
   }, []);
-
-  /* ============================
-     ADD SUBJECT
-  ============================ */
 
   const handleAddSubject = async () => {
     if (!newSubject.name) {
@@ -69,10 +61,6 @@ function Subjects() {
       alert("Server error");
     }
   };
-
-  /* ============================
-     DELETE SUBJECT
-  ============================ */
 
   const deleteSubject = async (id) => {
     try {
@@ -134,7 +122,7 @@ function Subjects() {
         {showModal && (
           <div style={styles.modalOverlay}>
             <div style={styles.modal}>
-              <h2>Add New Subject</h2>
+              <h2 style={styles.modalTitle}>Add New Subject</h2>
 
               <input
                 placeholder="Subject Name"
@@ -170,7 +158,7 @@ function Subjects() {
                     description: e.target.value
                   })
                 }
-                style={styles.input}
+                style={styles.textarea}
               />
 
               <div style={styles.modalButtons}>
@@ -197,7 +185,7 @@ function Subjects() {
 }
 
 /* ============================
-   STYLES
+   IMPROVED STYLES
 ============================ */
 
 const styles = {
@@ -206,8 +194,7 @@ const styles = {
     flexDirection: "column",
     gap: "30px",
     padding: "10px",
-    fontFamily: "Inter, system-ui, sans-serif",
-    color: "#374151"
+    fontFamily: "Inter, system-ui, sans-serif"
   },
 
   header: {
@@ -217,38 +204,39 @@ const styles = {
   },
 
   title: {
-    fontSize: "26px",
-    fontWeight: "600",
-    color: "#1f2937"
+    fontSize: "28px",
+    fontWeight: "700",
+    color: "#111827"
   },
 
   addButton: {
     padding: "10px 18px",
-    background: "#4f46e5",
+    background: "linear-gradient(135deg,#6366f1,#4f46e5)",
     color: "white",
     border: "none",
     borderRadius: "8px",
     cursor: "pointer",
     fontWeight: "600",
     fontSize: "14px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+    boxShadow: "0 6px 18px rgba(79,70,229,0.35)"
   },
 
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-    gap: "22px"
+    gap: "24px"
   },
 
   card: {
     background: "#ffffff",
     padding: "22px",
     borderRadius: "14px",
-    boxShadow: "0 6px 20px rgba(0,0,0,0.06)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    border: "1px solid #f1f5f9"
+    border: "1px solid #f1f5f9",
+    transition: "all 0.25s ease"
   },
 
   subjectTitle: {
@@ -262,7 +250,7 @@ const styles = {
     fontSize: "14px",
     color: "#6b7280",
     marginBottom: "8px",
-    lineHeight: "1.4"
+    lineHeight: "1.5"
   },
 
   credits: {
@@ -287,7 +275,7 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100%",
-    background: "rgba(0,0,0,0.35)",
+    background: "rgba(15,23,42,0.65)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
@@ -295,21 +283,39 @@ const styles = {
 
   modal: {
     background: "#ffffff",
-    padding: "30px",
-    borderRadius: "14px",
-    width: "420px",
+    padding: "40px",
+    borderRadius: "16px",
+    width: "440px",
     display: "flex",
     flexDirection: "column",
-    gap: "15px",
-    boxShadow: "0 10px 40px rgba(0,0,0,0.15)"
+    gap: "18px",
+    boxShadow: "0 20px 60px rgba(0,0,0,0.25)"
+  },
+
+  modalTitle: {
+    fontSize: "22px",
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: "5px"
   },
 
   input: {
-    padding: "11px",
+    padding: "12px",
     borderRadius: "8px",
-    border: "1px solid #e5e7eb",
+    border: "1px solid #d1d5db",
     fontSize: "14px",
-    outline: "none"
+    outline: "none",
+    background: "#f9fafb"
+  },
+
+  textarea: {
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #d1d5db",
+    fontSize: "14px",
+    outline: "none",
+    background: "#f9fafb",
+    minHeight: "80px"
   },
 
   modalButtons: {
@@ -319,11 +325,12 @@ const styles = {
   },
 
   cancelBtn: {
-    padding: "10px 15px",
+    padding: "10px 16px",
     borderRadius: "8px",
-    border: "1px solid #ddd",
+    border: "1px solid #d1d5db",
     background: "#f3f4f6",
-    cursor: "pointer"
+    cursor: "pointer",
+    fontWeight: "500"
   }
 };
 
