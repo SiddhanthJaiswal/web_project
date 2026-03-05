@@ -80,7 +80,7 @@ function Dashboard() {
     if (!token) return;
 
     try {
-      const res = await fetch("http://localhost:5000/api/exam", {
+      const res = await fetch("http://localhost:5000/api/exams", {
         headers: {
           Authorization: `Bearer ${token}`
         }
