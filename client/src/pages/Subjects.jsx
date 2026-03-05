@@ -185,7 +185,7 @@ function Subjects() {
 }
 
 /* ============================
-   IMPROVED STYLES
+   STYLES
 ============================ */
 
 const styles = {
@@ -203,10 +203,13 @@ const styles = {
     alignItems: "center"
   },
 
+  /* FIXED HEADING COLOR */
+
   title: {
-    fontSize: "28px",
+    fontSize: "30px",
     fontWeight: "700",
-    color: "#111827"
+    color: "#e0e7ff",
+    letterSpacing: "0.5px"
   },
 
   addButton: {
@@ -231,19 +234,18 @@ const styles = {
     background: "#ffffff",
     padding: "22px",
     borderRadius: "14px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+    boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    border: "1px solid #f1f5f9",
-    transition: "all 0.25s ease"
+    border: "1px solid #e5e7eb"
   },
 
   subjectTitle: {
     fontSize: "18px",
     fontWeight: "600",
     marginBottom: "6px",
-    color: "#111827"
+    color: "#1f2937"
   },
 
   description: {
@@ -295,8 +297,7 @@ const styles = {
   modalTitle: {
     fontSize: "22px",
     fontWeight: "700",
-    color: "#111827",
-    marginBottom: "5px"
+    color: "#1f2937"
   },
 
   input: {
