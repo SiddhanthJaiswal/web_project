@@ -96,7 +96,14 @@ function ImportantLinks() {
 
       {categories.map((category) => (
         <section key={category} className="page-section mt-md">
-          <h2 className="page-title" style={{ fontSize: 18 }}>
+          <h2
+            className="page-title"
+            style={{
+              fontSize: 20,
+              color: "#93c5fd",
+              letterSpacing: "0.5px"
+            }}
+          >
             {category}
           </h2>
 
