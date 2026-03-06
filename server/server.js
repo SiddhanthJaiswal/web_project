@@ -9,7 +9,7 @@ require("dotenv").config();
 const checklistRoutes = require("./routes/checklistRoutes");
 const examRoutes = require("./routes/examRoutes");
 const authRoutes = require("./routes/authRoutes");
-const goalsRoutes = require("./routes/goalsRoutes");
+const goalsRoutes = require("./routes/goals");
 const subjectRoutes = require("./routes/subjectRoutes");
 const moduleRoutes = require("./routes/moduleRoutes");
 const fileRoutes = require("./routes/fileRoutes");
