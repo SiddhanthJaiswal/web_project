@@ -104,7 +104,15 @@ function ImportantLinks() {
             {links
               .filter((link) => link.category === category)
               .map((link) => (
-                <div key={link.id} className="task-card">
+                <div
+                  key={link.id}
+                  className="task-card"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    backdropFilter: "blur(6px)"
+                  }}
+                >
                   <div className="task-card-main">
                     <a
                       href={link.url}
@@ -112,15 +120,28 @@ function ImportantLinks() {
                       rel="noopener noreferrer"
                       className="task-text"
                       style={{
-                        color: "#1d4ed8",
-                        textDecoration: "underline",
-                        cursor: "pointer"
+                        color: "#60a5fa",
+                        fontWeight: "500",
+                        textDecoration: "none",
+                        fontSize: "15px",
+                        letterSpacing: "0.3px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        transition: "all 0.2s ease"
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.color = "#93c5fd";
+                        e.target.style.transform = "translateX(3px)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.color = "#60a5fa";
+                        e.target.style.transform = "translateX(0)";
                       }}
                     >
-                      {link.title}
+                      🔗 {link.title}
                     </a>
                   </div>
-
                   <button
                     className="btn btn-danger task-delete-btn"
                     onClick={() => deleteLink(link.id)}
