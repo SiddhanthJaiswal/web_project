@@ -93,7 +93,16 @@ function Subjects() {
 
         <div style={styles.grid}>
           {subjects.map((subject) => (
-            <div key={subject._id} style={styles.card}>
+            <div
+              key={subject._id}
+              style={styles.card}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
               <div
                 onClick={() => navigate(`/subjects/${subject._id}`)}
                 style={{ cursor: "pointer" }}
@@ -231,44 +240,49 @@ const styles = {
   },
 
   card: {
-    background: "#ffffff",
+    background: "rgba(255,255,255,0.05)",
+    backdropFilter: "blur(8px)",
     padding: "22px",
     borderRadius: "14px",
-    boxShadow: "0 12px 30px rgba(0,0,0,0.12)",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    border: "1px solid #e5e7eb"
+    border: "1px solid rgba(255,255,255,0.08)",
+    transition: "all 0.25s ease",
+    cursor: "pointer"
   },
 
   subjectTitle: {
     fontSize: "18px",
     fontWeight: "600",
     marginBottom: "6px",
-    color: "#1f2937"
+    color: "#e2e8f0"
   },
 
   description: {
     fontSize: "14px",
-    color: "#6b7280",
+    color: "#94a3b8",
     marginBottom: "8px",
     lineHeight: "1.5"
   },
 
   credits: {
     fontSize: "13px",
-    color: "#4b5563"
+    color: "#cbd5f5"
   },
 
   deleteBtn: {
-    background: "#ef4444",
+    background: "linear-gradient(135deg,#ef4444,#dc2626)",
     border: "none",
     color: "white",
-    padding: "7px",
-    borderRadius: "6px",
-    marginTop: "12px",
+    padding: "8px",
+    borderRadius: "8px",
+    marginTop: "14px",
     cursor: "pointer",
-    fontSize: "13px"
+    fontSize: "13px",
+    fontWeight: "500",
+    transition: "all 0.2s ease"
   },
 
   modalOverlay: {
@@ -314,10 +328,11 @@ modal: {
   textarea: {
     padding: "12px",
     borderRadius: "8px",
-    border: "1px solid #d1d5db",
+    border: "1px solid #475569",
     fontSize: "14px",
     outline: "none",
-    background: "#f9fafb",
+    background: "#334155",
+    color: "white",
     minHeight: "80px"
   },
 
